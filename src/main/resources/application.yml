@@ -1,8 +1,8 @@
 spring:
   datasource:
-    # ??: jdbc:h2:~/querydsl
-    # jdbc:h2:tcp://localhost/~/querydsl
-    url: jdbc:h2:mem:querydsl++
+    # 최초: jdbc:h2:~/querydsl
+    url: jdbc:h2:tcp://localhost/~/querydsl
+#    url: jdbc:h2:mem:querydsl
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -13,7 +13,7 @@ spring:
     properties:
       hibernate:
 #        show_sql: true
-        format_sql: true
+#        format_sql: true
 
     devtools:
       livereload:
@@ -21,7 +21,11 @@ spring:
       restart:
         enabled: false
 
-logging:
-  level:
+logging.level:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
