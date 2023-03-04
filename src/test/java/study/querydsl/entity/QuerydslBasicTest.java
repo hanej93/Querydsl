@@ -674,4 +674,51 @@ public class QuerydslBasicTest {
     private BooleanExpression allEq(String usernameCond, Integer ageCond) {
         return usernameEq(usernameCond).and(ageEq(ageCond));
     }
+
+    @Test
+    public void bulkUpdate() {
+        // member1 = 10 -> DB member1
+        // member2 = 20 -> DB member2
+        // member3 = 30 -> DB member3
+        // member4 = 40 -> DB member4
+        
+        long count = queryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        em.flush();
+        em.clear();
+
+        // member1 = 10 -> DB 비회원
+        // member2 = 20 -> DB 비회원
+        // member3 = 30 -> DB member3
+        // member4 = 40 -> DB member4
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member1 : result) {
+            System.out.println("member1 = " + member1);
+        }
+    }
+
+    @Test
+    public void bulkAdd() {
+        queryFactory
+                .update(member)
+//                .set(member.age, member.age.add(1))
+                .set(member.age, member.age.multiply(2))
+                .execute();
+    }
+
+    @Test
+    public void bulkDelete() {
+        queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+    }
 }
