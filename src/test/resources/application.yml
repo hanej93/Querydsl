@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: test
 
   datasource:
     # 최초: jdbc:h2:~/querydsl
